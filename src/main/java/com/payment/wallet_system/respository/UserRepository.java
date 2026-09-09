@@ -1,0 +1,9 @@
+package com.payment.wallet_system.respository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.payment.wallet_system.entity.User;
+
+public interface UserRepository extends  JpaRepository<User,Long>{
+    boolean existsByEmail(String email);
+}
