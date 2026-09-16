@@ -3,8 +3,12 @@ package com.payment.wallet_system.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.payment.wallet_system.entity.User;
+import com.payment.wallet_system.dto.RegisterRequest;
+import com.payment.wallet_system.dto.RegisterResponse;
 import com.payment.wallet_system.service.UserService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,9 +21,9 @@ public class UserController {
         this.userService=userService;
     }
     @PostMapping
-    public User registerUser(@RequestBody User user) {
+    public RegisterResponse registerUser(@RequestBody @Valid  RegisterRequest request) {
         
-        return userService.resgisterUser(user);
+        return userService.resgisterUser(request);
     }
     
 }
