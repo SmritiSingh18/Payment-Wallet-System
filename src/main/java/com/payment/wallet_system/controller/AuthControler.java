@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payment.wallet_system.dto.LoginRequest;
+import com.payment.wallet_system.dto.LoginResponse;
 import com.payment.wallet_system.entity.User;
 import com.payment.wallet_system.service.AuthService;
 
@@ -22,10 +23,16 @@ public class AuthControler {
         this.authService=authService;
     }
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody @Valid LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
         User user=authService.login(request);
+        LoginResponse response=new LoginResponse();
         
-        return ResponseEntity.ok(user);
+        response.setId(user.getId());
+        response.setName(user.getName());
+        response.setEmail(user.getEmail());
+        response.setRole(user.getRole());
+        
+        return ResponseEntity.ok(response);
     }
     
 
