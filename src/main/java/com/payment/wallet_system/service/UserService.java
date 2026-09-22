@@ -1,5 +1,6 @@
 package com.payment.wallet_system.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,16 +10,21 @@ import com.payment.wallet_system.dto.RegisterRequest;
 import com.payment.wallet_system.dto.RegisterResponse;
 import com.payment.wallet_system.entity.Role;
 import com.payment.wallet_system.entity.User;
+import com.payment.wallet_system.entity.Wallet;
+import com.payment.wallet_system.entity.WalletStatus;
 import com.payment.wallet_system.exception.DuplicateResourceException;
 import com.payment.wallet_system.respository.UserRepository;
+import com.payment.wallet_system.respository.WalletRepository;
 
 @Service 
 public class UserService {
     private  final UserRepository userRepository;
     private  final PasswordEncoder passwordEncoder;
-    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder){
+    private  final WalletRepository walletRepository;
+    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder,WalletRepository walletRepository){
         this.userRepository=userRepository;
         this.passwordEncoder=passwordEncoder;
+        this.walletRepository=walletRepository;
     }
 
     public RegisterResponse resgisterUser(RegisterRequest request){
@@ -32,6 +38,15 @@ public class UserService {
         user.setRole(Role.USER);
         user.setCreatedAt(LocalDateTime.now());
         User savedUser=userRepository.save(user);
+        
+        Wallet wallet=new Wallet();
+        wallet.setWalletNumber("Wallet_"+System.currentTimeMillis());
+        wallet.setBalance(BigDecimal.ZERO);
+        wallet.setStatus(WalletStatus.ACTIVE);
+        wallet.setUser(savedUser);
+        walletRepository.save(wallet);
+
+        
 
         RegisterResponse response=new RegisterResponse();
         response.setId(savedUser.getId());
