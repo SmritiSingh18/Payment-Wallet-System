@@ -3,6 +3,7 @@ package com.payment.wallet_system.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payment.wallet_system.dto.AddMoneyRequest;
+import com.payment.wallet_system.dto.TransferMoneyRequest;
 import com.payment.wallet_system.dto.WalletResponse;
 import com.payment.wallet_system.service.WalletService;
 
@@ -38,6 +39,15 @@ public class WalletController {
         String email=authentication.getName();
         return  walletService.addMoney(email, request);
     }
+
+    @PostMapping("/transfer")
+    public WalletResponse transferMoney(@RequestBody @Valid TransferMoneyRequest request) {
+       Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+       String email=authentication.getName();
+        
+        return walletService.transferMoney(email, request);
+    }
+    
     
     
     
