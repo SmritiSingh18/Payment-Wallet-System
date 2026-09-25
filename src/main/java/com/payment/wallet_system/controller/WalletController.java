@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 
 
@@ -41,11 +42,11 @@ public class WalletController {
     }
 
     @PostMapping("/transfer")
-    public WalletResponse transferMoney(@RequestBody @Valid TransferMoneyRequest request) {
+    public WalletResponse transferMoney(@RequestHeader ("idempotency-Key") String idempotencyKey,@RequestBody @Valid TransferMoneyRequest request) {
        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
        String email=authentication.getName();
         
-        return walletService.transferMoney(email, request);
+        return walletService.transferMoney(email, request,idempotencyKey);
     }
     
     
