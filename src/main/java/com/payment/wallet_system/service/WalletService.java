@@ -109,15 +109,17 @@ public class WalletService {
                         .findByEmail(email)
                         .orElseThrow(()-> new RuntimeException("Sender not found"));
         Wallet senderWallet=walletRepository
-                            .findByUser(sender)
-                            .orElseThrow(()-> new RuntimeException("Sender wallet not found"));
+                            .findWithLockByUser(sender)
+                            .orElseThrow(()-> 
+                            new RuntimeException("Sender Wallet not found"));
+                                   
 
         User receiver=userRepository
                       .findByEmail(request.getReceiverEmail())
                       .orElseThrow(()-> new  RuntimeException("Receiver not found"));
 
         Wallet receiverWallet=walletRepository
-                              .findByUser(receiver)
+                              .findWithLockByUser(receiver)
                               .orElseThrow(()->new  RuntimeException("Receiver Wallet not found"));
 
         if(sender.getId()==receiver.getId()){
