@@ -24,7 +24,8 @@ public class Wallet {
 
     @Column (unique = true)
     private String walletNumber;
-
+    
+    
     private  BigDecimal balance;
     
     @Enumerated (EnumType.STRING)
