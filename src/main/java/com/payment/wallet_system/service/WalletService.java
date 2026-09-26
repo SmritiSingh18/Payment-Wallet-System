@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.payment.wallet_system.dto.AddMoneyRequest;
 import com.payment.wallet_system.dto.TransferMoneyRequest;
 import com.payment.wallet_system.dto.WalletResponse;
+import com.payment.wallet_system.entity.AuditEventType;
 import com.payment.wallet_system.entity.IdempotencyRecord;
 import com.payment.wallet_system.entity.IdempotencyStatus;
 import com.payment.wallet_system.entity.Transaction;
@@ -17,6 +18,7 @@ import com.payment.wallet_system.entity.TransactionStatus;
 import com.payment.wallet_system.entity.User;
 import com.payment.wallet_system.entity.Wallet;
 import com.payment.wallet_system.entity.WalletStatus;
+import com.payment.wallet_system.respository.AuditLogRespository;
 import com.payment.wallet_system.respository.IdempotencyRepository;
 import com.payment.wallet_system.respository.TransactionRepository;
 import com.payment.wallet_system.respository.UserRepository;
@@ -26,16 +28,20 @@ import jakarta.transaction.Transactional;
 
 @Service 
 public class WalletService {
+    private final AuditLogService auditLogService;
     private  final WalletRepository walletRepository;
     private  final UserRepository userRepository;
     private  final TransactionRepository transactionRepository;
     private  final IdempotencyRepository idempotencyRepository;
+    private  final AuditLogRespository auditLogRespository;
 
-    public WalletService(WalletRepository walletRepository,UserRepository userRepository,TransactionRepository transactionRepository,IdempotencyRepository idempotencyRepository){
+    public WalletService(WalletRepository walletRepository,UserRepository userRepository,TransactionRepository transactionRepository,IdempotencyRepository idempotencyRepository,AuditLogRespository auditLogRespository, AuditLogService auditLogService){
         this.walletRepository=walletRepository;
         this.userRepository=userRepository;
         this.transactionRepository=transactionRepository;
         this.idempotencyRepository=idempotencyRepository;
+        this.auditLogRespository=auditLogRespository;
+        this.auditLogService = auditLogService;
     }
 
     public WalletResponse getWallet(String email){
@@ -67,6 +73,9 @@ public class WalletService {
         wallet.setBalance(wallet.getBalance().add(request.getAmount()));
         
         Wallet savedWallet=walletRepository.save(wallet);
+         
+        auditLogService.log(user.getId(),AuditEventType.MONEY_ADDED,"Money added:"+request.getAmount(),null);
+
         WalletResponse response=new WalletResponse();
         response.setWalletNumber(savedWallet.getWalletNumber());
         response.setBalance(savedWallet.getBalance());
@@ -131,7 +140,10 @@ public class WalletService {
         }
 
         if(senderWallet.getBalance().compareTo(request.getAmount())<0){
-            throw new RuntimeException("Insuffient balance");
+
+            auditLogService.log(sender.getId(), AuditEventType.TRANSFER_FAILED,"Transfer Failed-Insufficient balance",null);
+
+            throw new RuntimeException("Insufficient balance");
         }
 
             senderWallet.setBalance(senderWallet.getBalance().subtract(request.getAmount()));
@@ -156,7 +168,8 @@ public class WalletService {
             record.setStatus(IdempotencyStatus.SUCCESS);
             record.setCreatedAt(LocalDateTime.now());
             idempotencyRepository.save(record);
-
+             
+            auditLogService.log(sender.getId(),AuditEventType.TRANSFER_SUCCESS,"Transfer Success",savedTransaction.getId());
 
             
 

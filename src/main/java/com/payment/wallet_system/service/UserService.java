@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.payment.wallet_system.dto.RegisterRequest;
 import com.payment.wallet_system.dto.RegisterResponse;
+import com.payment.wallet_system.entity.AuditEventType;
 import com.payment.wallet_system.entity.Role;
 import com.payment.wallet_system.entity.User;
 import com.payment.wallet_system.entity.Wallet;
@@ -18,13 +19,15 @@ import com.payment.wallet_system.respository.WalletRepository;
 
 @Service 
 public class UserService {
+    private final AuditLogService auditLogService;
     private  final UserRepository userRepository;
     private  final PasswordEncoder passwordEncoder;
     private  final WalletRepository walletRepository;
-    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder,WalletRepository walletRepository){
+    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder,WalletRepository walletRepository,AuditLogService auditLogService){
         this.userRepository=userRepository;
         this.passwordEncoder=passwordEncoder;
         this.walletRepository=walletRepository;
+        this.auditLogService = auditLogService;
     }
 
     public RegisterResponse resgisterUser(RegisterRequest request){
@@ -45,7 +48,8 @@ public class UserService {
         wallet.setStatus(WalletStatus.ACTIVE);
         wallet.setUser(savedUser);
         walletRepository.save(wallet);
-
+         
+        auditLogService.log(savedUser.getId(), AuditEventType.USER_REGISTERED,"User Registered",null);
         
 
         RegisterResponse response=new RegisterResponse();
