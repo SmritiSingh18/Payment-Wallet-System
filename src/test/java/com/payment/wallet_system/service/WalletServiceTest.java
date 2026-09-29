@@ -3,6 +3,7 @@ package com.payment.wallet_system.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -187,6 +188,66 @@ public class WalletServiceTest {
         assertEquals(new  BigDecimal("600"),receiverWallet.getBalance());
         verify(transactionRepository).save(any(Transaction.class));
         verify(idempotencyRepository).save(any(IdempotencyRecord.class));
+        verify(auditLogService).log(sender.getId(), AuditEventType.TRANSFER_SUCCESS, "Transfer Success", transaction.getId());
+        }
+        
+        @Test 
+        void shouldFailTranferForInsufficientBalance(){
+          User sender=new User();
+          sender.setId(1L);
+          sender.setName("Sender");
+          sender.setEmail("sender@gmail.com");
+
+          User receiver=new User();
+          receiver.setId(2L);
+          receiver.setName("Receiver");
+          receiver.setEmail("receoiver@gmail.com");
+
+          Wallet senderWallet=new Wallet();
+          senderWallet.setWalletNumber("WALLET-001");
+          senderWallet.setBalance(new BigDecimal("100"));
+          senderWallet.setStatus(WalletStatus.ACTIVE);
+          senderWallet.setUser(sender);
+
+          Wallet receiverWallet=new  Wallet();
+          receiverWallet.setWalletNumber("WAllET-002");
+          receiverWallet.setBalance(new  BigDecimal("200"));
+          receiverWallet.setStatus(WalletStatus.ACTIVE);
+          receiverWallet.setUser(receiver);
+
+            TransferMoneyRequest request=new  TransferMoneyRequest();
+            request.setReceiverEmail("receiver@gmail.com");
+            request.setAmount(new BigDecimal("400"));
+
+            when(idempotencyRepository.findByIdempotencyKey("payment-002"))
+                  .thenReturn(Optional.empty());
+                  
+            when(userRepository.findByEmail("sender@gmail.com"))
+                   .thenReturn(Optional.of(sender));
+
+            when(userRepository.findByEmail("receiver@gmail.com"))
+                   .thenReturn(Optional.of(receiver));
+
+            when(walletRepository.findWithLockByUser(sender))
+                   .thenReturn(Optional.of(senderWallet));
+
+            when(walletRepository.findWithLockByUser(receiver))
+                    .thenReturn(Optional.of(receiverWallet));
+
+            RuntimeException exception=assertThrows(RuntimeException.class,
+                 ()-> walletService.transferMoney(
+                    "sender@gmail.com",
+                     request,
+                      "payment-002"));
+
+                    assertEquals("Insufficient balance", exception.getMessage());
+                    verify(transactionRepository,never())
+                          .save(any(Transaction.class));
+                    verify(auditLogService).log(
+                        sender.getId(),
+                         AuditEventType.TRANSFER_FAILED,
+                          "Transfer Failed-Insufficient balance",
+                           null);
         }
     
 }
