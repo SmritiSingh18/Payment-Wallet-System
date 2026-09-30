@@ -32,6 +32,8 @@ import com.payment.wallet_system.respository.TransactionRepository;
 import com.payment.wallet_system.respository.UserRepository;
 import com.payment.wallet_system.respository.WalletRepository;
 
+import io.jsonwebtoken.security.Jwks.OP;
+
 @ExtendWith (MockitoExtension.class)
 public class WalletServiceTest {
     @Mock 
@@ -249,5 +251,143 @@ public class WalletServiceTest {
                           "Transfer Failed-Insufficient balance",
                            null);
         }
+        
+        @Test 
+        void shouldFailTransferWhenSenderAndReceiverAreSame(){
+            User user=new User();
+            user.setId(1L);
+            user.setName("Test user");
+            user.setEmail("test@gmail.com");
+
+            Wallet wallet=new  Wallet();
+            wallet.setWalletNumber("WALLET-001");
+            wallet.setBalance(new BigDecimal("1000"));
+            wallet.setStatus(WalletStatus.ACTIVE);
+            wallet.setUser(user);
+
+            TransferMoneyRequest request=new TransferMoneyRequest();
+            request.setReceiverEmail("test@gmail.com");
+            request.setAmount(new BigDecimal("400"));
+
+            when(idempotencyRepository.findByIdempotencyKey("payment-003"))
+                 .thenReturn(Optional.empty());
+
+            when(userRepository.findByEmail("test@gmail.com"))
+                 .thenReturn(Optional.of(user));
+
+            when(walletRepository.findWithLockByUser(user))
+                  .thenReturn(Optional.of(wallet));
+             
+            RuntimeException exception=assertThrows(RuntimeException.class,
+                ()->walletService.transferMoney("test@gmail.com", request, "payment-003") );
+
+            assertEquals("Cannot transfer money to yourself", exception.getMessage());
+            verify(transactionRepository,never()).save(any(Transaction.class));
+            assertEquals(new BigDecimal("1000"),wallet.getBalance());
+        }
+        
+        @Test 
+        void shouldFailTransferWhenSenderWalletIsBlocked(){
+           User sender=new User();
+           sender.setId(1L);
+           sender.setName("Sender");
+           sender.setEmail("sender@gmail.com");
+            
+           User receiver=new User();
+           receiver.setId(2L);
+           receiver.setName("Receiver");
+           receiver.setEmail("receiver@gmail.com");
+
+           Wallet senderWallet=new Wallet();
+           senderWallet.setWalletNumber("WALLET-001");
+           senderWallet.setBalance(new BigDecimal("1000"));
+           senderWallet.setStatus(WalletStatus.BLOCKED);
+           senderWallet.setUser(sender);
+
+           Wallet receiverWallet=new Wallet();
+           receiverWallet.setWalletNumber("WALLET-002");
+           receiverWallet.setBalance(new BigDecimal("200"));
+           receiverWallet.setStatus(WalletStatus.BLOCKED);
+           receiverWallet.setUser(receiver);
+
+           TransferMoneyRequest request=new  TransferMoneyRequest();
+           request.setReceiverEmail("receiver@gmail.com");
+           request.setAmount(new BigDecimal("400"));
+
+             when(idempotencyRepository.findByIdempotencyKey("payment-004"))
+                  .thenReturn(Optional.empty());
+
+            when(userRepository.findByEmail("sender@gmail.com"))
+                   .thenReturn(Optional.of(sender));
+            
+            when(userRepository.findByEmail("receiver@gmail.com"))
+                    .thenReturn(Optional.of(receiver));
+
+            when(walletRepository.findWithLockByUser(sender))
+                   .thenReturn(Optional.of(senderWallet));
+
+            when(walletRepository.findWithLockByUser(receiver))
+                  .thenReturn(Optional.of(receiverWallet));
+               
+            RuntimeException exception=assertThrows(RuntimeException.class,
+                 ()->walletService.transferMoney(
+                    "sender@gmail.com", request,
+                     "payment-004"));
+
+            assertEquals("Wallet is not active", exception.getMessage());
+            verify(transactionRepository,never()).save(any(Transaction.class));
+        }
+
+        @Test 
+        void shouldFailTransferWhenReceiverWalletIsBlocked(){
+           User sender=new User();
+           sender.setId(1L);
+           sender.setName("Sender");
+           sender.setEmail("sender@gmail.com");
+
+           User receiver=new User();
+           receiver.setId(2L);
+           receiver.setName("Receiver");
+           receiver.setEmail("receiver@gmail.com");
+
+           Wallet senderWallet=new Wallet();
+           senderWallet.setWalletNumber("WALLET=001");
+           senderWallet.setBalance(new BigDecimal("1000"));
+           senderWallet.setStatus(WalletStatus.ACTIVE);
+           senderWallet.setUser(sender);
+
+           Wallet receiverWallet=new Wallet();
+           receiverWallet.setWalletNumber("WALLET-002");
+           receiverWallet.setBalance(new BigDecimal("200"));
+           receiverWallet.setStatus(WalletStatus.BLOCKED);
+           receiverWallet.setUser(receiver);
+
+           TransferMoneyRequest request=new  TransferMoneyRequest();
+           request.setReceiverEmail("receiver@gmail.com");
+           request.setAmount(new BigDecimal("400"));
+
+           when(idempotencyRepository.findByIdempotencyKey("payment-005"))
+                .thenReturn(Optional.empty());
+           
+            when(userRepository.findByEmail("sender@gmail.com"))
+                .thenReturn(Optional.of(sender));
+            
+            when(userRepository.findByEmail("receiver@gmail.com"))
+                .thenReturn(Optional.of(receiver));
+
+            when(walletRepository.findWithLockByUser(sender))
+                .thenReturn(Optional.of(senderWallet));
+            
+            when(walletRepository.findWithLockByUser(receiver))
+                .thenReturn(Optional.of(receiverWallet));
+
+            RuntimeException exception=assertThrows(
+                RuntimeException.class,
+            ()-> walletService.transferMoney("sender@gmail.com", request, "payment-005"));
+
+            assertEquals("Wallet is not active", exception.getMessage());
+            verify(transactionRepository,never()).save(any(Transaction.class));
+        }
+
     
 }

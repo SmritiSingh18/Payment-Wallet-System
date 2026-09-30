@@ -132,7 +132,7 @@ public class WalletService {
                               .orElseThrow(()->new  RuntimeException("Receiver Wallet not found"));
 
         if(sender.getId()==receiver.getId()){
-            throw new RuntimeException("Cannot tranfer money to yourself");
+            throw new RuntimeException("Cannot transfer money to yourself");
         }
         if(senderWallet.getStatus()!=WalletStatus.ACTIVE ||
            receiverWallet.getStatus()!=WalletStatus.ACTIVE){
