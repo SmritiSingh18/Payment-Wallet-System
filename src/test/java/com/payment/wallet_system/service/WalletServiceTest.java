@@ -3,6 +3,7 @@ package com.payment.wallet_system.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -17,6 +18,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
+
 import com.payment.wallet_system.dto.AddMoneyRequest;
 import com.payment.wallet_system.dto.TransferMoneyRequest;
 import com.payment.wallet_system.dto.WalletResponse;
@@ -509,7 +512,92 @@ public class WalletServiceTest {
 
             assertEquals("Idempotency key has already been used", exception.getMessage());
             verify(transactionRepository,never())
-                  .save(any(Transaction.class));
+              .save(any(Transaction.class));
+        }
+        
+        @Test 
+        void  shouldFailWhenReceiverNotFound(){
+            User sender=new  User();
+            sender.setId(1L);
+            sender.setName("Sender");
+            sender.setEmail("sender@gmail.com");
+
+            Wallet senderWallet=new Wallet();
+            senderWallet.setWalletNumber("WALLET-001");
+            senderWallet.setBalance(new BigDecimal("1000"));
+            senderWallet.setStatus(WalletStatus.ACTIVE);
+            senderWallet.setUser(sender);
+
+            TransferMoneyRequest request=new  TransferMoneyRequest();
+            request.setReceiverEmail("receiver@gmail.com");
+            request.setAmount(new BigDecimal("400"));
+
+            when(idempotencyRepository.findByIdempotencyKey("payment-008"))
+                .thenReturn(Optional.empty());
+            
+            when(userRepository.findByEmail("sender@gmail.com"))
+                 .thenReturn(Optional.of(sender));
+            
+            when(walletRepository.findWithLockByUser(sender))
+                 .thenReturn(Optional.of(senderWallet));
+
+            when(userRepository.findByEmail("receiver@gmail.com"))
+                 .thenReturn(Optional.empty());
+
+            RuntimeException exception=assertThrows(RuntimeException.class, 
+                ()-> walletService.transferMoney(
+                    "sender@gmail.com", request, "payment-008"));
+
+            assertEquals("Receiver not found", exception.getMessage());
+            verify(transactionRepository,never())
+                   .save(any(Transaction.class));
+        }
+
+        @Test 
+        void shouldFailWhenReceiverWalletNotFound(){
+           User sender=new User();
+           sender.setId(1L);
+           sender.setName("Sender");
+           sender.setEmail("sender@gmail.com");
+
+           User receiver=new User();
+           receiver.setId(2L);
+           receiver.setName("Receiver");
+           receiver.setEmail("receiver@gmail.com");
+           
+           Wallet senderWallet=new Wallet();
+           senderWallet.setWalletNumber("Wallet-001");
+           senderWallet.setBalance(new BigDecimal("1000"));
+           senderWallet.setStatus(WalletStatus.ACTIVE);
+           senderWallet.setUser(sender);
+
+           TransferMoneyRequest request=new  TransferMoneyRequest();
+           request.setReceiverEmail("receiver@gmail.com");
+           request.setAmount(new BigDecimal("400"));
+
+           when(idempotencyRepository.findByIdempotencyKey("payment-009"))
+                .thenReturn(Optional.empty());
+            
+            when(userRepository.findByEmail("sender@gmail.com"))
+                .thenReturn(Optional.of(sender));
+            
+            when(walletRepository.findWithLockByUser(sender))
+                .thenReturn(Optional.of(senderWallet));
+
+            when(userRepository.findByEmail("receiver@gmail.com"))
+                .thenReturn(Optional.of(receiver));
+
+            when(walletRepository.findWithLockByUser(receiver))
+                .thenReturn(Optional.empty());
+
+                RuntimeException exception=assertThrows(
+                    RuntimeException.class, 
+                ()-> walletService.transferMoney(
+                    "sender@gmail.com", request, "payment-009"));
+
+                assertEquals("Receiver Wallet not found", exception.getMessage());
+                verify(transactionRepository,never()).save(any(Transaction.class));
+               
         }
 
     
