@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +22,7 @@ import com.payment.wallet_system.dto.TransferMoneyRequest;
 import com.payment.wallet_system.dto.WalletResponse;
 import com.payment.wallet_system.entity.AuditEventType;
 import com.payment.wallet_system.entity.IdempotencyRecord;
+import com.payment.wallet_system.entity.IdempotencyStatus;
 import com.payment.wallet_system.entity.Transaction;
 import com.payment.wallet_system.entity.TransactionStatus;
 import com.payment.wallet_system.entity.User;
@@ -387,6 +389,127 @@ public class WalletServiceTest {
 
             assertEquals("Wallet is not active", exception.getMessage());
             verify(transactionRepository,never()).save(any(Transaction.class));
+        }
+        
+        @Test 
+        void shouldReturnExistingTransactionForDuplicateIdempotencyKey(){
+           User sender=new User();
+           sender.setId(1L);
+           sender.setName("Sender");
+           sender.setEmail("sender@gmail.com");
+
+           User receiver=new User();
+           receiver.setId(2L);
+           receiver.setName("Receiver");
+           receiver.setEmail("receiver@gmail.com");
+
+           Wallet senderWallet=new Wallet();
+           senderWallet.setWalletNumber("WALLET-001");
+           senderWallet.setBalance(new BigDecimal("1000"));
+           senderWallet.setStatus(WalletStatus.ACTIVE);
+           senderWallet.setUser(sender);
+
+           Wallet receiverWallet=new Wallet();
+           receiverWallet.setWalletNumber("WALLET-002");
+           receiverWallet.setBalance(new BigDecimal("200"));
+           receiverWallet.setStatus(WalletStatus.ACTIVE);
+           receiverWallet.setUser(receiver);
+
+           when(walletRepository.save(senderWallet))
+               .thenReturn(senderWallet);
+            
+            when(walletRepository.save(receiverWallet))
+                .thenReturn(receiverWallet);
+
+           TransferMoneyRequest request=new  TransferMoneyRequest();
+           request.setReceiverEmail("receiver@gmail.com");
+           request.setAmount(new  BigDecimal("400"));
+
+           when(idempotencyRepository.findByIdempotencyKey("payment-006"))
+                .thenReturn(Optional.empty());
+
+            when(userRepository.findByEmail("sender@gmail.com"))
+                .thenReturn(Optional.of(sender));
+
+            when(userRepository.findByEmail("receiver@gmail.com"))
+                .thenReturn(Optional.of(receiver));
+
+            when(walletRepository.findWithLockByUser(sender))
+                .thenReturn(Optional.of(senderWallet));
+
+            when(walletRepository.findWithLockByUser(receiver))
+                 .thenReturn(Optional.of(receiverWallet));
+            
+            Transaction transaction=new  Transaction();
+            transaction.setId(1L);
+            transaction.setTransactionId("TXN-006");
+            transaction.setSenderWalletNumber("WALLET-001");
+            transaction.setReceiverWalletNumber("WALLET-002");
+            transaction.setAmount(new BigDecimal("400"));
+            transaction.setStatus(TransactionStatus.SUCCESS);
+            transaction.setCreatedAt(LocalDateTime.now());
+
+            when(transactionRepository.save(any(Transaction.class)))
+                .thenReturn(transaction);
+
+            when(transactionRepository.findByTransactionId("TXN-006"))
+                .thenReturn(Optional.of(transaction));
+            
+            when(walletRepository.findByWalletNumber("WALLET-002"))
+                .thenReturn(Optional.of(receiverWallet));
+
+            WalletResponse firstResponse=walletService.transferMoney(
+                "sender@gmail.com", request, "payment-006");
+
+            assertEquals(new BigDecimal("600"),senderWallet.getBalance());
+            assertEquals(new BigDecimal("600"), receiverWallet.getBalance());
+             
+            IdempotencyRecord existingRecord=new  IdempotencyRecord();
+            existingRecord.setId(1L);
+            existingRecord.setIdempotencyKey("payment-006");
+            existingRecord.setTransactionId("TXN-006");
+            existingRecord.setUserId(sender.getId());
+            existingRecord.setStatus(IdempotencyStatus.SUCCESS);
+            existingRecord.setCreatedAt(LocalDateTime.now());
+            
+            when(idempotencyRepository.findByIdempotencyKey("payment-006"))
+                 .thenReturn(Optional.of(existingRecord));
+
+            WalletResponse secondResponse=walletService.transferMoney(
+                "sender@gmail.com", request, "payment-006");
+
+            assertEquals(new BigDecimal("600"), senderWallet.getBalance());
+            assertEquals(new BigDecimal("600"), receiverWallet.getBalance());
+
+            verify(transactionRepository,times(1))
+                   .save(any(Transaction.class));
+
+            verify(idempotencyRepository,times(1))
+                    .save(any(IdempotencyRecord.class));
+
+
+
+            }
+        @Test 
+        void shouldFailWhenIdempotencyKeyIsAleardyProcessing(){
+            IdempotencyRecord existingRecord=new IdempotencyRecord();
+            existingRecord.setId(2L);
+            existingRecord.setIdempotencyKey("payment-007");
+            existingRecord.setTransactionId("TXN-007");
+            existingRecord.setUserId(1L);
+            existingRecord.setStatus(IdempotencyStatus.PROCESSING);
+            existingRecord.setCreatedAt(LocalDateTime.now());
+
+            when(idempotencyRepository.findByIdempotencyKey("payment-007"))
+                 .thenReturn(Optional.of(existingRecord));
+
+            RuntimeException exception=assertThrows(RuntimeException.class, 
+                ()-> walletService.transferMoney(
+                    "sender@gmail.com", null, "payment-007"));
+
+            assertEquals("Idempotency key has already been used", exception.getMessage());
+            verify(transactionRepository,never())
+                  .save(any(Transaction.class));
         }
 
     
