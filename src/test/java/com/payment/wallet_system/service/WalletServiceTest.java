@@ -599,6 +599,27 @@ public class WalletServiceTest {
                 verify(transactionRepository,never()).save(any(Transaction.class));
                
         }
+        
+        @Test 
+        void shouldFailWhenIdempotencyIsAlreadyFailed(){
+            
+            IdempotencyRecord record=new  IdempotencyRecord();
+            record.setIdempotencyKey("payment-010");
+            record.setTransactionId("TXN-0101");
+            record.setUserId(1L);
+            record.setStatus(IdempotencyStatus.FAILED);
+            record.setCreatedAt(LocalDateTime.now());
+
+            when(idempotencyRepository.findByIdempotencyKey("payment-010"))
+                 .thenReturn(Optional.of(record));
+
+            RuntimeException exception=assertThrows(
+                RuntimeException.class, 
+                ()-> walletService.transferMoney("sender@gmail.com", null, "payment-010"));
+            assertEquals("Idempotency key has already been used", exception.getMessage());
+            verify(transactionRepository,never())
+                  .save(any(Transaction.class));
+        }
 
     
 }
