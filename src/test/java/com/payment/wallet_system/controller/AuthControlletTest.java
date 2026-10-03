@@ -14,6 +14,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import com.payment.wallet_system.dto.LoginRequest;
 import com.payment.wallet_system.dto.LoginResponse;
 import com.payment.wallet_system.entity.Role;
+import com.payment.wallet_system.exception.InvalidCredentials;
 import com.payment.wallet_system.respository.UserRepository;
 import com.payment.wallet_system.security.JwtService;
 import com.payment.wallet_system.service.AuthService;
@@ -65,6 +66,61 @@ void  shouldLoginSuccessfully() throws Exception{
         .andExpect(jsonPath("$.email").value("test@gmail.com"))
         .andExpect(jsonPath("$.role").value("USER"))
         .andExpect(jsonPath("$.token").value("fake-jwt-token"));
+     }
+     
+     @Test
+     void shouldFailWhenEmailDoesNotExist() throws Exception{
+        when(authService.login(any(LoginRequest.class)))
+            .thenThrow(new InvalidCredentials("Invalid Email"));
+
+        mockMvc.perform(
+            post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                    {
+                    "email":"unknown.com",
+                    "password":"password123"
+                    }
+                """)
+         )
+         .andExpect(status().isBadRequest())
+         .andExpect(jsonPath("$.message").value("must be a well-formed email address"));
+       
+     }
     
-  }
+     @Test 
+     void shouldFailWhenPasswordIsIncorrect() throws Exception{
+         
+        when(authService.login(any(LoginRequest.class)))
+            .thenThrow(new  InvalidCredentials("Invalid Password"));
+
+        mockMvc.perform(
+            post("/api/auth/login")
+                 .contentType(MediaType.APPLICATION_JSON)
+                 .content("""
+                    {
+                    "email":"test@gmail.com",
+                    "password":"wrongpassword"
+                    }
+                 """)
+                )
+            .andExpect(status().isUnauthorized())
+            .andExpect(jsonPath("$.message").value("Invalid Password"));
+     }
+    
+     @Test 
+     void shouldFailWhenLoginRequestIsInvalid() throws Exception{
+        
+        mockMvc.perform(
+            post("/api/auth/login")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "email":"",
+                "password":""
+                }
+            """)
+        )
+        .andExpect(status().isBadRequest());
+     }
 }
