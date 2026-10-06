@@ -50,5 +50,14 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(response);
      } 
+
+     @ExceptionHandler (RuntimeException.class)
+     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex){
+        ErrorResponse error=new ErrorResponse();
+        error.setMessage(ex.getMessage());
+        return  ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(error);
+     }
     
 }

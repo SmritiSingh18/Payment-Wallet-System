@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -17,8 +19,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payment.wallet_system.entity.Transaction;
+import com.payment.wallet_system.entity.TransactionStatus;
 import com.payment.wallet_system.entity.User;
 import com.payment.wallet_system.entity.Wallet;
+import com.payment.wallet_system.respository.TransactionRepository;
 import com.payment.wallet_system.respository.UserRepository;
 import com.payment.wallet_system.respository.WalletRepository;
 
@@ -31,6 +36,9 @@ public class PaymentWalletIntegrationTest {
     
     @Autowired 
     private  UserRepository userRepository;
+    
+    @Autowired 
+    private TransactionRepository transactionRepository;
     
     @Autowired 
     private  MockMvc mockMvc;
@@ -244,5 +252,213 @@ public class PaymentWalletIntegrationTest {
         )
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.balance").value(300.00));
+
+
+        User sender=userRepository
+                    .findByEmail(senderEmail)
+                    .orElseThrow();
+        
+        Wallet senderWallet=walletRepository
+                            .findByUser(sender)
+                            .orElseThrow();
+        
+                            assertEquals(new  BigDecimal("700.00"), senderWallet.getBalance());
+
+        User receiver=userRepository
+                     .findByEmail(receiverEmail)
+                     .orElseThrow();
+        
+        Wallet receiverWallet=walletRepository
+                              .findByUser(receiver)
+                              .orElseThrow();
+        
+        assertEquals(new BigDecimal("300.00"), receiverWallet.getBalance());
+
+
+        List<Transaction> transactions=transactionRepository
+                                 .findBySenderWalletNumberOrReceiverWalletNumber(
+                                    senderWallet.getWalletNumber(),
+                                     receiverWallet.getWalletNumber());
+        assertEquals(1, transactions.size());
+        
+        Transaction transaction=transactions.get(0);
+
+        assertEquals(TransactionStatus.SUCCESS, transaction.getStatus());
+        assertEquals(senderWallet.getWalletNumber(), transaction.getSenderWalletNumber());
+        assertEquals(receiverWallet.getWalletNumber(), transaction.getReceiverWalletNumber());
+    }
+    
+    @Test 
+    void shouldFailTransferWhenBalanceIsInsufficient() throws Exception{
+          
+        String senderEmail="sender-"+UUID.randomUUID()+"@gmail.com";
+        String receiverEmail="receiver-"+UUID.randomUUID()+"@gmail.com";
+        String password="password123";
+
+        mockMvc.perform(
+            post("/api/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "name":"Sender",
+                "email":"%s",
+                "password":"%s"
+                }
+            """.formatted(senderEmail,password))
+        )
+        .andExpect(status().isOk());
+
+        mockMvc.perform(
+            post("/api/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "name":"Receiver",
+                "email":"%s",
+                "password":"%s"
+                }
+            """.formatted(receiverEmail,password))
+        )
+        .andExpect(status().isOk());
+
+
+        String loginResponse=mockMvc.perform(
+            post("/api/auth/login")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "email":"%s",
+                "password":"%s"
+                }
+            """.formatted(senderEmail,password))
+        )
+        .andExpect(status().isOk())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
+        ObjectMapper objectMapper=new ObjectMapper();
+
+        String token=objectMapper
+               .readTree(loginResponse)
+               .get("token")
+               .asText();
+
+        mockMvc.perform(
+            post("/api/wallet/add-money")
+            .header("Authorization","Bearer " + token)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "amount":500.00
+                 }
+            """)
+        )
+        .andExpect(status().isOk());
+
+        mockMvc.perform(
+            post("/api/wallet/transfer")
+            .header("Authorization","Bearer " + token)
+            .header("Idempotency-Key","insufficient-"+UUID.randomUUID())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "receiverEmail":"%s",
+                "amount":600.00
+                }
+            """.formatted(receiverEmail))
+        )
+        .andExpect(status().isBadRequest());
+
+        User sender=userRepository
+             .findByEmail(senderEmail)
+             .orElseThrow();
+
+        Wallet senderWallet=walletRepository
+               .findByUser(sender)
+               .orElseThrow();
+
+        assertEquals(new  BigDecimal("500.00"), senderWallet.getBalance());
+
+    }
+    
+    @Test 
+    void  shouldFailTransferToSelf() throws Exception{
+       
+        String email="self-"+UUID.randomUUID()+"@gmail.com";
+        String password="password123";
+
+        mockMvc.perform(
+            post("/api/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "name":"Self User",
+                "email":"%s",
+                "password":"%s"
+                }
+            """.formatted(email,password))
+        )
+        .andExpect(status().isOk());
+
+        String loginResponse=mockMvc.perform(
+            post("/api/auth/login")
+               .contentType(MediaType.APPLICATION_JSON)
+               .content("""
+                {
+                "email":"%s",
+                "password":"%s"
+                }
+               """.formatted(email,password))
+        )
+        .andExpect(status().isOk())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
+        ObjectMapper objectMapper=new ObjectMapper();
+
+        String token =objectMapper
+              .readTree(loginResponse)
+              .get("token")
+              .asText();
+
+        mockMvc.perform(
+            post("/api/wallet/add-money")
+            .header("Authorization","Bearer "+ token)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "amount":500.00
+                }
+            """)
+        )
+        .andExpect(status().isOk());
+
+        mockMvc.perform(
+            post("/api/wallet/transfer")
+            .header("Authorization","Bearer "+ token)
+            .header("Idempotency-Key","self-"+ UUID.randomUUID())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "receiverEmail":"%s",
+                "amount":100.00
+                }
+            """.formatted(email))
+        )
+        .andExpect(status().isBadRequest());
+
+        User user=userRepository
+                .findByEmail(email)
+                .orElseThrow();
+
+
+        Wallet wallet=walletRepository
+                   .findByUser(user)
+                   .orElseThrow();
+
+        assertEquals(new BigDecimal("500.00"), wallet.getBalance());
+
     }
 }
