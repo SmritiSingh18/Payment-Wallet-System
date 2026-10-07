@@ -29,7 +29,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response,FilterChain filterChain) throws ServletException,IOException{
        String authHeader=request.getHeader("Authorization");
       
-       System.out.println("AUTH HEADER: " + authHeader);
        if(authHeader== null || !authHeader.startsWith("Bearer ")){
         filterChain.doFilter(request, response);
        return ;
@@ -40,7 +39,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                             .orElse(null);
 
     if(user!= null && jwtService.isTokenValid(token, user)){
-        System.out.println("AUTHENTICATED USER: " + user.getEmail());
         UsernamePasswordAuthenticationToken authentication=new UsernamePasswordAuthenticationToken(user.getEmail(),null,
             java.util.List.of(new  SimpleGrantedAuthority("ROLE_"+user.getRole().name()))
         );

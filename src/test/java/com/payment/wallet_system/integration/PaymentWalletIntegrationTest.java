@@ -2,12 +2,15 @@ package com.payment.wallet_system.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -19,10 +22,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.payment.wallet_system.entity.IdempotencyRecord;
+import com.payment.wallet_system.entity.IdempotencyStatus;
 import com.payment.wallet_system.entity.Transaction;
 import com.payment.wallet_system.entity.TransactionStatus;
 import com.payment.wallet_system.entity.User;
 import com.payment.wallet_system.entity.Wallet;
+import com.payment.wallet_system.respository.IdempotencyRepository;
 import com.payment.wallet_system.respository.TransactionRepository;
 import com.payment.wallet_system.respository.UserRepository;
 import com.payment.wallet_system.respository.WalletRepository;
@@ -39,6 +45,9 @@ public class PaymentWalletIntegrationTest {
     
     @Autowired 
     private TransactionRepository transactionRepository;
+    
+    @Autowired 
+    private IdempotencyRepository idempotencyRepository;
     
     @Autowired 
     private  MockMvc mockMvc;
@@ -461,4 +470,248 @@ public class PaymentWalletIntegrationTest {
         assertEquals(new BigDecimal("500.00"), wallet.getBalance());
 
     }
+    
+    @Test 
+    void shouldNotProcessSameIdempotencyKeyTwice() throws Exception{
+       String senderEmail="sender-"+UUID.randomUUID()+"@gmail.com";
+       String receiverEmail="receiver-"+UUID.randomUUID()+"@gmail.com";
+       String password="password123";
+
+       mockMvc.perform(
+        post("/api/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "name":"Sender",
+                "email":"%s",
+                "password":"%s"
+                }
+            """.formatted(senderEmail,password))
+       )
+       .andExpect(status().isOk());
+
+       mockMvc.perform(
+        post("/api/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "name":"Receiver",
+                "email":"%s",
+                "password":"%s"
+                }
+            """.formatted(receiverEmail,password))
+
+       )
+       .andExpect(status().isOk());
+
+       String loginResponse=mockMvc.perform(
+        post("/api/auth/login")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "email":"%s",
+                "password":"%s"
+                }
+            """.formatted(senderEmail,password))
+       )
+       .andExpect(status().isOk())
+       .andReturn()
+       .getResponse()
+       .getContentAsString();
+
+       ObjectMapper objectMapper=new  ObjectMapper();
+       String token=objectMapper
+              .readTree(loginResponse)
+               .get("token")
+               .asText();
+
+        mockMvc.perform(
+            post("/api/wallet/add-money")
+            .header("Authorization","Bearer "+token)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "amount":1000.00
+                }
+            """)
+        )
+        .andExpect(status().isOk());
+
+        String idempotencyKey="payment-"+UUID.randomUUID();
+
+        mockMvc.perform(
+            post("/api/wallet/transfer")
+            .header("Authorization", "Bearer "+token)
+            .header("Idempotency-Key", idempotencyKey)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "receiverEmail":"%s",
+                "amount":300.00
+                }
+            """.formatted(receiverEmail))
+        )
+        .andDo(result -> {
+        System.out.println("FIRST TRANSFER STATUS: "
+            + result.getResponse().getStatus());
+        System.out.println("FIRST TRANSFER BODY: "
+            + result.getResponse().getContentAsString());
+           })
+        .andExpect(status().isOk());
+
+            mockMvc.perform(
+            post("/api/wallet/transfer")
+            .header("Authorization","Bearer " +token)
+            .header("Idempotency-Key",idempotencyKey)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "receiverEmail":"%s",
+                "amount":300.00
+                }
+            """.formatted(receiverEmail))
+        )
+        .andExpect(status().isOk());
+
+
+        User sender=userRepository
+                 .findByEmail(senderEmail)
+                 .orElseThrow();
+        
+        Wallet senderWallet=walletRepository
+                 .findByUser(sender)
+                 .orElseThrow();
+
+        assertEquals(new BigDecimal("700.00"), senderWallet.getBalance());
+
+        User receiver=userRepository
+                .findByEmail(receiverEmail)
+                .orElseThrow();
+
+        Wallet receiverWallet=walletRepository
+                .findByUser(receiver)
+                .orElseThrow();
+        
+        assertEquals(new BigDecimal("300.00"), receiverWallet.getBalance());
+
+        List<Transaction> transactions=transactionRepository.findBySenderWalletNumberOrReceiverWalletNumber(
+            senderWallet.getWalletNumber(), 
+            receiverWallet.getWalletNumber());
+
+        assertEquals(1, transactions.size());
+
+        Optional<IdempotencyRecord> record=idempotencyRepository.findByIdempotencyKey(idempotencyKey);
+
+        assertTrue(record.isPresent());
+
+        assertEquals(IdempotencyStatus.SUCCESS, record.get().getStatus());
+        
+    }
+    
+    @Test 
+    void shouldGetTransactionHistorySuccesfully() throws Exception{
+      
+        String senderEmail="sender-"+UUID.randomUUID()+"@gmail.com";
+        String receiverEmail="receiver-"+UUID.randomUUID()+"@gmail.com";
+        String password="password123";
+
+        mockMvc.perform(
+            post("/api/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "name":"Sender",
+                "email":"%s",
+                "password":"%s"
+                }
+            """.formatted(senderEmail,password))
+        )
+        .andExpect(status().isOk());
+
+        mockMvc.perform(
+            post("/api/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("""
+                {
+                "name":"Receiver",
+                "email":"%s",
+                "password":"%s"
+                }
+            """.formatted(receiverEmail,password))
+        )
+        .andExpect(status().isOk());
+
+        String loginResponse=mockMvc.perform(
+            post("/api/auth/login")
+             .contentType(MediaType.APPLICATION_JSON)
+             .content("""
+                {
+                "email":"%s",
+                "password":"%s"
+                }
+             """.formatted(senderEmail,password))
+        )
+        .andExpect(status().isOk())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
+        ObjectMapper objectMapper=new ObjectMapper();
+        String token=objectMapper
+               .readTree(loginResponse)
+               .get("token")
+               .asText();
+        
+     mockMvc.perform(
+          post("/api/wallet/add-money")
+         .header("Authorization", "Bearer " + token)
+         .contentType(MediaType.APPLICATION_JSON)
+         .content("""
+               {
+                "amount":1000.00
+                }
+            """)
+        )
+      .andExpect(status().isOk());
+       
+      String idempotencyKey="history-"+UUID.randomUUID();
+
+      mockMvc.perform(
+        post("/api/wallet/transfer")
+        .header("Authorization","Bearer " +token)
+        .header("Idempotency-Key",idempotencyKey)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content("""
+            {
+            "receiverEmail":"%s",
+            "amount":300.00
+            }
+        """.formatted(receiverEmail))
+
+      )
+      .andExpect(status().isOk());
+
+      String transactionHistory=mockMvc.perform(
+        get("/api/transactions")
+        .header("Authorization","Bearer "+token)
+
+      )
+      .andExpect(status().isOk())
+      .andReturn()
+      .getResponse()
+      .getContentAsString();
+
+      JsonNode transactions=objectMapper.readTree(transactionHistory);
+
+      assertEquals(1, transactions.size());
+
+      JsonNode transaction=transactions.get(0);
+
+      assertEquals("300.0", transaction.get("amount").asText());
+      assertEquals("SUCCESS", transaction.get("status").asText());
+      assertNotNull(transaction.get("transactionId"));
+      assertNotNull(transaction.get("senderWalletNumber"));
+      assertNotNull(transaction.get("receiverWalletNumber"));
+      assertNotNull(transaction.get("createdAt"));
+    } 
 }
