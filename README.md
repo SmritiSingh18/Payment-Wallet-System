@@ -512,7 +512,6 @@ spring.datasource.username=<your-username>
 spring.datasource.password=<your-password>
 ```
 
-> Do not commit real passwords or secret keys to GitHub.
 
 ### 3. Run the Application
 
