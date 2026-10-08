@@ -283,7 +283,7 @@ Stores idempotency keys and their associated transaction state.
 
 Stores important system events for traceability.
 
-A## API Endpoints
+## API Endpoints
 
 ### Authentication
 
