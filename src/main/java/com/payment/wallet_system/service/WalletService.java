@@ -18,7 +18,6 @@ import com.payment.wallet_system.entity.TransactionStatus;
 import com.payment.wallet_system.entity.User;
 import com.payment.wallet_system.entity.Wallet;
 import com.payment.wallet_system.entity.WalletStatus;
-import com.payment.wallet_system.respository.AuditLogRespository;
 import com.payment.wallet_system.respository.IdempotencyRepository;
 import com.payment.wallet_system.respository.TransactionRepository;
 import com.payment.wallet_system.respository.UserRepository;
@@ -33,14 +32,12 @@ public class WalletService {
     private  final UserRepository userRepository;
     private  final TransactionRepository transactionRepository;
     private  final IdempotencyRepository idempotencyRepository;
-    private  final AuditLogRespository auditLogRespository;
-
-    public WalletService(WalletRepository walletRepository,UserRepository userRepository,TransactionRepository transactionRepository,IdempotencyRepository idempotencyRepository,AuditLogRespository auditLogRespository, AuditLogService auditLogService){
+  
+    public WalletService(WalletRepository walletRepository,UserRepository userRepository,TransactionRepository transactionRepository,IdempotencyRepository idempotencyRepository, AuditLogService auditLogService){
         this.walletRepository=walletRepository;
         this.userRepository=userRepository;
         this.transactionRepository=transactionRepository;
         this.idempotencyRepository=idempotencyRepository;
-        this.auditLogRespository=auditLogRespository;
         this.auditLogService = auditLogService;
     }
 

@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.payment.wallet_system.dto.LoginRequest;
 import com.payment.wallet_system.dto.LoginResponse;
-import com.payment.wallet_system.entity.User;
 import com.payment.wallet_system.service.AuthService;
 
 import jakarta.validation.Valid;

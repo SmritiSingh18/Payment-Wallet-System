@@ -2,7 +2,6 @@ package com.payment.wallet_system.service;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.projection.EntityProjection.ProjectionType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

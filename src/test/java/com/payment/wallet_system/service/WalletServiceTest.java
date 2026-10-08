@@ -35,7 +35,6 @@ import com.payment.wallet_system.respository.TransactionRepository;
 import com.payment.wallet_system.respository.UserRepository;
 import com.payment.wallet_system.respository.WalletRepository;
 
-import io.jsonwebtoken.security.Jwks.OP;
 
 @ExtendWith (MockitoExtension.class)
 public class WalletServiceTest {
@@ -187,7 +186,7 @@ public class WalletServiceTest {
                 .thenReturn(transaction);
 
 
-        WalletResponse response=walletService.transferMoney("sender@gmail.com", request, "payment-001");
+        walletService.transferMoney("sender@gmail.com", request, "payment-001");
 
         assertEquals(new BigDecimal("600"),senderWallet.getBalance());
         assertEquals(new  BigDecimal("600"),receiverWallet.getBalance());
@@ -459,7 +458,7 @@ public class WalletServiceTest {
             when(walletRepository.findByWalletNumber("WALLET-002"))
                 .thenReturn(Optional.of(receiverWallet));
 
-            WalletResponse firstResponse=walletService.transferMoney(
+                walletService.transferMoney(
                 "sender@gmail.com", request, "payment-006");
 
             assertEquals(new BigDecimal("600"),senderWallet.getBalance());
@@ -476,7 +475,7 @@ public class WalletServiceTest {
             when(idempotencyRepository.findByIdempotencyKey("payment-006"))
                  .thenReturn(Optional.of(existingRecord));
 
-            WalletResponse secondResponse=walletService.transferMoney(
+                walletService.transferMoney(
                 "sender@gmail.com", request, "payment-006");
 
             assertEquals(new BigDecimal("600"), senderWallet.getBalance());
