@@ -1,0 +1,2551 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< com.payment:wallet-system >----------------------
+[INFO] Building wallet-system 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ wallet-system ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ wallet-system ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ wallet-system ---
+[INFO] skip non existing resourceDirectory /Users/smritisingh/Documents/wallet-system/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ wallet-system ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ wallet-system ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.payment.wallet_system.integration.ConcurrencyIntegrationTest
+07:54:05.851 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.payment.wallet_system.integration.ConcurrencyIntegrationTest]: ConcurrencyIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+07:54:05.900 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.payment.wallet_system.WalletSystemApplication for test class com.payment.wallet_system.integration.ConcurrencyIntegrationTest
+07:54:05.936 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.payment.wallet_system.integration.ConcurrencyIntegrationTest]: ConcurrencyIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+07:54:05.938 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.payment.wallet_system.WalletSystemApplication for test class com.payment.wallet_system.integration.ConcurrencyIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-09T07:54:06.109+05:30  INFO 10568 --- [wallet-system] [           main] c.p.w.i.ConcurrencyIntegrationTest       : Starting ConcurrencyIntegrationTest using Java 22.0.2 with PID 10568 (started by smritisingh in /Users/smritisingh/Documents/wallet-system)
+2026-10-09T07:54:06.110+05:30  INFO 10568 --- [wallet-system] [           main] c.p.w.i.ConcurrencyIntegrationTest       : No active profile set, falling back to 1 default profile: "default"
+2026-10-09T07:54:06.495+05:30  INFO 10568 --- [wallet-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-09T07:54:06.521+05:30  INFO 10568 --- [wallet-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 5 JPA repository interfaces.
+2026-10-09T07:54:06.730+05:30  INFO 10568 --- [wallet-system] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-10-09T07:54:06.752+05:30  INFO 10568 --- [wallet-system] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-10-09T07:54:06.911+05:30  INFO 10568 --- [wallet-system] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-09T07:54:06.924+05:30  INFO 10568 --- [wallet-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-09T07:54:06.978+05:30  INFO 10568 --- [wallet-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5f4e389a
+2026-10-09T07:54:06.979+05:30  INFO 10568 --- [wallet-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-09T07:54:07.011+05:30  INFO 10568 --- [wallet-system] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5432/payment_wallet]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 17.10
+	Default catalog/schema: payment_wallet/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-10-09T07:54:07.417+05:30  INFO 10568 --- [wallet-system] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-10-09T07:54:07.475+05:30  INFO 10568 --- [wallet-system] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-09T07:54:07.514+05:30  INFO 10568 --- [wallet-system] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-09T07:54:07.663+05:30  WARN 10568 --- [wallet-system] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-09T07:54:07.713+05:30  WARN 10568 --- [wallet-system] [           main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: f2929783-f670-4919-9c3d-93e688751589
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-09T07:54:07.716+05:30  INFO 10568 --- [wallet-system] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-10-09T07:54:07.976+05:30  INFO 10568 --- [wallet-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-09T07:54:07.976+05:30  INFO 10568 --- [wallet-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-09T07:54:07.978+05:30  INFO 10568 --- [wallet-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-10-09T07:54:08.022+05:30  INFO 10568 --- [wallet-system] [           main] c.p.w.i.ConcurrencyIntegrationTest       : Started ConcurrencyIntegrationTest in 2.059 seconds (process running for 2.537)
+2026-10-09T07:54:08.023+05:30  WARN 10568 --- [wallet-system] [           main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-10-09T07:54:08.024+05:30  WARN 10568 --- [wallet-system] [           main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/Users/smritisingh/.m2/repository/net/bytebuddy/byte-buddy-agent/1.18.11/byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at, email, name, password, role) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        wallets
+        (balance, status, user_id, wallet_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.email=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (created_at, email, name, password, role) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        wallets
+        (balance, status, user_id, wallet_number) 
+    values
+        (?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/wallet/add-money
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZW5kZXItMTc5MTUxMjY0ODI2NEB0ZXN0LmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzkxNTEyNjQ4LCJleHAiOjE3OTE1MTYyNDh9.FD7C_XQDou6moIB1ddLrOC4fhCdckWHkamC3AZ84EGY", Content-Length:"23"]
+             Body = {
+   "amount":10000
+ }
+
+    Session Attrs = {}
+
+Handler:
+             Type = com.payment.wallet_system.controller.WalletController
+           Method = com.payment.wallet_system.controller.WalletController#addMoney(AddMoneyRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"balance":10000.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648640"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-15] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-13] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-6] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-15] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=10)
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-14] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-6] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30000ms (total=10, active=10, idle=0, waiting=8)
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-11] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-11] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30002ms (total=10, active=10, idle=0, waiting=2)
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-17] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-19] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-20] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-10] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-19] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=5)
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-20] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=4)
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-7] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.970+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-18] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-7] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=0)
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-18] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30002ms (total=10, active=10, idle=0, waiting=7)
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-13] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30004ms (total=10, active=10, idle=0, waiting=5)
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-14] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=9)
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-17] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30003ms (total=10, active=10, idle=0, waiting=1)
+2026-10-09T07:54:38.971+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-10] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=3)
+STATUS CODE: 400
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-2] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-7] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-15] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.021+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-2] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30004ms (total=10, active=10, idle=0, waiting=2)
+2026-10-09T07:55:09.022+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-7] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30003ms (total=10, active=10, idle=0, waiting=10)
+2026-10-09T07:55:09.022+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-15] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30006ms (total=10, active=10, idle=0, waiting=7)
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-13] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-6] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.022+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-13] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=0)
+2026-10-09T07:55:09.022+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-6] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30001ms (total=10, active=10, idle=0, waiting=8)
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-11] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.022+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-11] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=4)
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-20] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.022+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-20] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30004ms (total=10, active=10, idle=0, waiting=3)
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-17] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-19] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.023+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-17] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=6)
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-10] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.018+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-14] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:09.023+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-10] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30004ms (total=10, active=10, idle=0, waiting=5)
+2026-10-09T07:55:09.023+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-19] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30004ms (total=10, active=10, idle=0, waiting=9)
+2026-10-09T07:55:09.023+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-14] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30006ms (total=10, active=10, idle=0, waiting=1)
+STATUS CODE: 400
+STATUS CODE: 400
+STATUS CODE: 400
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+STATUS CODE: 400
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+2026-10-09T07:55:39.105+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-19] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.105+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-20] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.106+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-2] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.105+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-7] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.109+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-20] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=7)
+2026-10-09T07:55:39.109+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-7] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=3)
+2026-10-09T07:55:39.109+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-19] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=6)
+2026-10-09T07:55:39.105+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-17] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.105+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-11] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.106+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-4] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.109+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-11] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30006ms (total=10, active=10, idle=0, waiting=4)
+2026-10-09T07:55:39.105+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-13] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.109+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-4] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30004ms (total=10, active=10, idle=0, waiting=0)
+2026-10-09T07:55:39.105+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-10] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.105+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-14] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.105+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-15] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:55:39.110+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-14] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30006ms (total=10, active=10, idle=0, waiting=7)
+2026-10-09T07:55:39.110+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-15] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30006ms (total=10, active=10, idle=0, waiting=6)
+2026-10-09T07:55:39.109+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-2] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30006ms (total=10, active=10, idle=0, waiting=1)
+2026-10-09T07:55:39.109+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-17] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=5)
+2026-10-09T07:55:39.109+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-13] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30005ms (total=10, active=10, idle=0, waiting=2)
+2026-10-09T07:55:39.110+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-10] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30004ms (total=10, active=10, idle=0, waiting=6)
+STATUS CODE: 400
+STATUS CODE: 400
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+STATUS CODE: 400
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        ir1_0.id,
+        ir1_0.created_at,
+        ir1_0.idempotency_key,
+        ir1_0.status,
+        ir1_0.transaction_id,
+        ir1_0.user_id 
+    from
+        idempotency_records ir1_0 
+    where
+        ir1_0.idempotency_key=?
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-11] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-15] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-2] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.947+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-15] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.948+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-2] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-10] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.948+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-10] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-20] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.948+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-20] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-17] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-7] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.948+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-17] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.948+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-7] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-3] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-13] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.948+05:30  WARN 10568 --- [wallet-system] [pool-3-thread-3] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-19] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.945+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-14] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: null
+2026-10-09T07:56:08.947+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-11] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.948+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-13] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.948+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-19] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+2026-10-09T07:56:08.948+05:30  WARN 10568 --- [wallet-system] [ool-3-thread-14] org.hibernate.orm.jdbc.error             : HikariPool-1 - Interrupted during connection acquisition
+STATUS CODE: 400
+STATUS CODE: 400
+STATUS CODE: 400
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+STATUS CODE: 400
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+STATUS CODE: 400
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE BODY: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Transfer Failed-HTTP -400 |Body: {"message":"Could not open JPA EntityManager for transaction","status":0,"timeStamp":null}
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+STATUS CODE: 200
+RESPONSE BODY: {"balance":100.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648750"}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+STATUS CODE: 200
+RESPONSE BODY: {"balance":200.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648750"}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+STATUS CODE: 200
+RESPONSE BODY: {"balance":300.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648750"}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+STATUS CODE: 200
+RESPONSE BODY: {"balance":400.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648750"}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+STATUS CODE: 200
+RESPONSE BODY: {"balance":500.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648750"}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+STATUS CODE: 200
+RESPONSE BODY: {"balance":600.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648750"}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+STATUS CODE: 200
+RESPONSE BODY: {"balance":700.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648750"}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+STATUS CODE: 200
+RESPONSE BODY: {"balance":800.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648750"}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.name,
+        u1_0.password,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.status,
+        w1_0.user_id,
+        w1_0.wallet_number 
+    from
+        wallets w1_0 
+    where
+        w1_0.user_id=? 
+    for
+        no key update of w1_0
+Hibernate: 
+    insert 
+    into
+        transactions
+        (amount, created_at, receiver_wallet_number, sender_wallet_number, status, transaction_id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        idempotency_records
+        (created_at, idempotency_key, status, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        audit_logs
+        (created_at, description, event_type, transaction_id, user_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+Hibernate: 
+    update
+        wallets 
+    set
+        balance=?,
+        status=?,
+        user_id=?,
+        wallet_number=? 
+    where
+        id=?
+STATUS CODE: 200
+RESPONSE BODY: {"balance":900.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648750"}
+RESPONSE HEADERS: [Content-Type, X-Content-Type-Options, X-XSS-Protection, Cache-Control, Pragma, Expires, X-Frame-Options]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/users
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"99"]
+             Body = {
+"name":"Concurrent Sender",
+"email":"sender-1791512648264@test.com",
+"password":"password123"
+ }
+
+    Session Attrs = {}
+
+Handler:
+             Type = com.payment.wallet_system.controller.UserController
+           Method = com.payment.wallet_system.controller.UserController#registerUser(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"createdAt":"2026-10-09T07:54:08.616783","email":"sender-1791512648264@test.com","id":339,"name":"Concurrent Sender","role":"USER"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/users
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"105"]
+             Body = {
+ "name":"Concurrent Receiver",
+ "email":"receiver-1791512648264@test.com",
+ "password":"password123"
+}
+
+    Session Attrs = {}
+
+Handler:
+             Type = com.payment.wallet_system.controller.UserController
+           Method = com.payment.wallet_system.controller.UserController#registerUser(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"createdAt":"2026-10-09T07:54:08.748336","email":"receiver-1791512648264@test.com","id":340,"name":"Concurrent Receiver","role":"USER"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"71"]
+             Body = {
+"email":"sender-1791512648264@test.com",
+"password":"password123"
+ }
+
+    Session Attrs = {}
+
+Handler:
+             Type = com.payment.wallet_system.controller.AuthControler
+           Method = com.payment.wallet_system.controller.AuthControler#login(LoginRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"email":"sender-1791512648264@test.com","id":339,"name":"Concurrent Sender","role":"USER","token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZW5kZXItMTc5MTUxMjY0ODI2NEB0ZXN0LmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzkxNTEyNjQ4LCJleHAiOjE3OTE1MTYyNDh9.FD7C_XQDou6moIB1ddLrOC4fhCdckWHkamC3AZ84EGY"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/wallet/add-money
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZW5kZXItMTc5MTUxMjY0ODI2NEB0ZXN0LmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzkxNTEyNjQ4LCJleHAiOjE3OTE1MTYyNDh9.FD7C_XQDou6moIB1ddLrOC4fhCdckWHkamC3AZ84EGY", Content-Length:"23"]
+             Body = {
+   "amount":10000
+ }
+
+    Session Attrs = {}
+
+Handler:
+             Type = com.payment.wallet_system.controller.WalletController
+           Method = com.payment.wallet_system.controller.WalletController#addMoney(AddMoneyRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"balance":10000.00,"status":"ACTIVE","walletNumber":"Wallet_1791512648640"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 123.3 s <<< FAILURE! -- in com.payment.wallet_system.integration.ConcurrencyIntegrationTest
+[ERROR] com.payment.wallet_system.integration.ConcurrencyIntegrationTest.shouldHandleConcurrentTransfers -- Time elapsed: 121.1 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: No tranfer should fail ==> expected: <0> but was: <44>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:139)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:201)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:590)
+	at com.payment.wallet_system.integration.ConcurrencyIntegrationTest.shouldHandleConcurrentTransfers(ConcurrencyIntegrationTest.java:227)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   ConcurrencyIntegrationTest.shouldHandleConcurrentTransfers:227 No tranfer should fail ==> expected: <0> but was: <44>
+[INFO] 
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:04 min
+[INFO] Finished at: 2026-10-09T07:56:09+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project wallet-system: There are test failures.
+[ERROR] 
+[ERROR] See /Users/smritisingh/Documents/wallet-system/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

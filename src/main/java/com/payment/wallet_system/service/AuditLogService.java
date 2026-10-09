@@ -1,3 +1,4 @@
+
 package com.payment.wallet_system.service;
 
 import java.time.LocalDateTime;
@@ -10,29 +11,50 @@ import com.payment.wallet_system.entity.AuditEventType;
 import com.payment.wallet_system.entity.AuditLog;
 import com.payment.wallet_system.respository.AuditLogRespository;
 
-
-@Service 
+@Service
 public class AuditLogService {
-    private  final AuditLogRespository auditLogRespository;
-    public AuditLogService(AuditLogRespository auditLogRespository){
-        this.auditLogRespository=auditLogRespository;
+
+    private final AuditLogRespository auditLogRespository;
+
+    public AuditLogService(AuditLogRespository auditLogRespository) {
+        this.auditLogRespository = auditLogRespository;
     }
-    
-    @Transactional (propagation = Propagation.REQUIRES_NEW)
-    public  void  log(Long userId,
-                      AuditEventType eventType,
-                      String decription,
-                      Long transactionId){
 
-    AuditLog auditLog=new AuditLog();
+    // Successful audit logs participate in the current transaction.
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void log(
+            Long userId,
+            AuditEventType eventType,
+            String description,
+            Long transactionId) {
 
-    auditLog.setUserId(userId);
-    auditLog.setEventType(eventType);
-    auditLog.setDescription(decription);
-    auditLog.setTransactionId(transactionId);
-    auditLog.setCreatedAt(LocalDateTime.now());
+        saveAuditLog(userId, eventType, description, transactionId);
+    }
 
-    auditLogRespository.save(auditLog);
-  }
-    
+    // Failed-transfer audit logs survive the transfer rollback.
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void logFailure(
+            Long userId,
+            AuditEventType eventType,
+            String description,
+            Long transactionId) {
+
+        saveAuditLog(userId, eventType, description, transactionId);
+    }
+
+    private void saveAuditLog(
+            Long userId,
+            AuditEventType eventType,
+            String description,
+            Long transactionId) {
+
+        AuditLog auditLog = new AuditLog();
+        auditLog.setUserId(userId);
+        auditLog.setEventType(eventType);
+        auditLog.setDescription(description);
+        auditLog.setTransactionId(transactionId);
+        auditLog.setCreatedAt(LocalDateTime.now());
+
+        auditLogRespository.save(auditLog);
+    }
 }
