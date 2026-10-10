@@ -1,0 +1,35 @@
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: wallet-postgres
+    environment:
+      POSTGRES_DB: payment_wallet
+      POSTGRES_USER: walletuser
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U walletuser -d payment_wallet"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    container_name: wallet-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/payment_wallet
+      SPRING_DATASOURCE_USERNAME: walletuser
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:

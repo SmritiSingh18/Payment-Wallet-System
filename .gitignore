@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local environment secrets
+.env
+
+# Maven build output
+target/
