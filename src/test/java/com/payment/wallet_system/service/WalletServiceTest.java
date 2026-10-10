@@ -247,11 +247,11 @@ public class WalletServiceTest {
                     assertEquals("Insufficient balance", exception.getMessage());
                     verify(transactionRepository,never())
                           .save(any(Transaction.class));
-                    verify(auditLogService).log(
-                        sender.getId(),
-                         AuditEventType.TRANSFER_FAILED,
-                          "Transfer Failed-Insufficient balance",
-                           null);
+                    verify(auditLogService).logFailure(sender.getId(),
+                     AuditEventType.TRANSFER_FAILED,
+                     "Transfer Failed- Insufficient balance",
+                      null);
+                        
         }
         
         @Test 
@@ -277,8 +277,6 @@ public class WalletServiceTest {
             when(userRepository.findByEmail("test@gmail.com"))
                  .thenReturn(Optional.of(user));
 
-            when(walletRepository.findWithLockByUser(user))
-                  .thenReturn(Optional.of(wallet));
              
             RuntimeException exception=assertThrows(RuntimeException.class,
                 ()->walletService.transferMoney("test@gmail.com", request, "payment-003") );
@@ -535,8 +533,6 @@ public class WalletServiceTest {
             when(userRepository.findByEmail("sender@gmail.com"))
                  .thenReturn(Optional.of(sender));
             
-            when(walletRepository.findWithLockByUser(sender))
-                 .thenReturn(Optional.of(senderWallet));
 
             when(userRepository.findByEmail("receiver@gmail.com"))
                  .thenReturn(Optional.empty());
@@ -592,7 +588,7 @@ public class WalletServiceTest {
                 ()-> walletService.transferMoney(
                     "sender@gmail.com", request, "payment-009"));
 
-                assertEquals("Receiver Wallet not found", exception.getMessage());
+                assertEquals("Receiver wallet not found", exception.getMessage());
                 verify(transactionRepository,never()).save(any(Transaction.class));
                
         }

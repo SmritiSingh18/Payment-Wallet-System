@@ -196,12 +196,11 @@ public WalletResponse transferMoney(
     if (senderWallet.getBalance()
             .compareTo(request.getAmount()) < 0) {
 
-        auditLogService.log(
-                sender.getId(),
-                AuditEventType.TRANSFER_FAILED,
-                "Transfer failed - insufficient balance",
-                null);
-
+        auditLogService.logFailure(sender.getId(),
+         AuditEventType.TRANSFER_FAILED,
+          "Transfer Failed- Insufficient balance",
+           null);
+                
         throw new RuntimeException("Insufficient balance");
     }
 
@@ -245,11 +244,12 @@ public WalletResponse transferMoney(
     idempotencyRepository.save(idempotencyRecord);
 
     // 12. Record successful transfer
-    auditLogService.logFailure(
-            sender.getId(),
-            AuditEventType.TRANSFER_SUCCESS,
-            "Transfer success",
-            savedTransaction.getId());
+    auditLogService.log(
+        sender.getId(),
+         AuditEventType.TRANSFER_SUCCESS,
+          "Transfer Success",
+           savedTransaction.getId());
+            
 
     // 13. Return receiver wallet details
     WalletResponse response = new WalletResponse();
