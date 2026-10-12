@@ -1,6 +1,6 @@
 package com.payment.wallet_system.service;
 
-
+import java.util.Objects;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -109,6 +109,10 @@ public WalletResponse transferMoney(
                             new RuntimeException(
                                     "Original transaction not found"));
 
+        if(transaction.getAmount().compareTo(request.getAmount())!=0){
+                throw new RuntimeException("Idempotency key reused with a different amount");
+        }
+
             Wallet receiverWallet = walletRepository
                     .findByWalletNumber(
                             transaction.getReceiverWalletNumber())
@@ -128,7 +132,6 @@ public WalletResponse transferMoney(
                 "Idempotency key has already been used");
     }
 
-    // 3. Find sender and receiver
     User sender = userRepository.findByEmail(email)
             .orElseThrow(() ->
                     new RuntimeException("Sender not found"));
@@ -138,15 +141,11 @@ public WalletResponse transferMoney(
             .orElseThrow(() ->
                     new RuntimeException("Receiver not found"));
 
-    // 4. Prevent transferring to yourself
-    if (sender.getId() == receiver.getId()) {
+    if (Objects.equals(sender.getId(),receiver.getId())) {
         throw new RuntimeException(
                 "Cannot transfer money to yourself");
     }
 
-    // 5. Lock wallets in a consistent order
-    // Both opposite-direction transfers will lock the
-    // lower user ID's wallet first.
     Wallet senderWallet;
     Wallet receiverWallet;
 
