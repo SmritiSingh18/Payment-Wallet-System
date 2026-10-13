@@ -40,14 +40,17 @@ public class AuthService {
             user.getPassword()
         );
          
-          auditLogService.log(user.getId(),AuditEventType.USER_LOGIN,"User login Succesful" ,null);
-        
-        if(!passwordMatches){
-            throw new InvalidCredentials("Invalid Password");
+         if (!passwordMatches) {
+    throw new InvalidCredentials("Invalid Password");
+}
 
+      auditLogService.log(
+         user.getId(),
+         AuditEventType.USER_LOGIN,
+         "User login Successful",
+         null
+       );
       
-       
-    }
        String token =jwtService.generateToken(user);
        LoginResponse response=new LoginResponse();
        response.setId(user.getId());

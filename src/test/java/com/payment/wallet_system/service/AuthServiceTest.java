@@ -78,11 +78,6 @@ public class AuthServiceTest {
 
         verify(passwordEncoder).matches("password123", "hashedPassword");
         verify(jwtService).generateToken(user);
-        auditLogService.log(
-            user.getId(),
-             AuditEventType.USER_LOGIN,
-              "User login Successful",
-               null);
 
         verify(auditLogService).log(
             user.getId(),

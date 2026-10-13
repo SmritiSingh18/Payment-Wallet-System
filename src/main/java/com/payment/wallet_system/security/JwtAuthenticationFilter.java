@@ -34,6 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
        return ;
     }
     String token=authHeader.substring(7);
+    try{
     String email=jwtService.extractEmail(token);
     User user=userRepository.findByEmail(email)
                             .orElse(null);
@@ -47,6 +48,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .setAuthentication(authentication);
                        
     }
+}catch(io.jsonwebtoken.JwtException|IllegalArgumentException exception){
+    SecurityContextHolder.clearContext();
+}
     filterChain.doFilter(request, response);
 }               
 }
